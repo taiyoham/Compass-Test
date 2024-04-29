@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Yx71TbIWUJJN
+      MYSQL_DATABASE: school
+      MYSQL_USER: taiyo
+      MYSQL_PASSWORD: MnbzIahys9j1
+    ports:
+      - "43306:3306"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql
+      - ./mysql/cnf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+  web:
+    build: ./web-api
+    container_name: web
+    depends_on:
+      - mysql
+    ports:
+      - "48080:8080"
